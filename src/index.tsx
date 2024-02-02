@@ -4,24 +4,32 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { applyMiddleware, createStore } from 'redux';
-import counter from './reducer';
 import rootReducer from './reducer';
 import { Provider } from 'react-redux';
+import { thunk } from 'redux-thunk';
+
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const loggerMiddleware = (store:any) => (next:any) => (action:any) => {
-  console.log('store',store);
-  console.log('action',action);
-  next(action)
-}
+// 미들웨어 정의
+const loggerMiddleware = (store: any) => (next: any) => (action: any) => {
+  console.log('store', store);
+  console.log('action', action);
+  next(action);
+};
 
-const middleware = applyMiddleware(loggerMiddleware)
 
-const store = createStore(rootReducer, middleware);
+// 미들웨어 적용
+const middleware = applyMiddleware(thunk);
 
-console.log('됐어???', store.getState())
+// 스토어 생성
+const store = createStore(rootReducer,undefined,middleware);
+
+
+
+// console.log('됐어???', store.getState())
 const render = () => root.render(
   <React.StrictMode>
     <Provider store={store}>

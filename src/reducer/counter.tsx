@@ -1,8 +1,8 @@
-interface Action {
+interface CounterAction {
   type:string
 }
 
-const counter = (state= 0, action:Action) => {
+const counter = (state= 0, action:CounterAction) => {
   switch (action.type) {
     case "INCREMENT":
         return state + 1;
